@@ -11,22 +11,36 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { AuthContext } from "../../context/authContext";
+import putData from "../../helpers/putData";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const { toggle, darkMode } = useContext(DarkModeContext);
-  const { currentUser } = useContext(AuthContext);
+  const { logOut, currentUser } = useContext(AuthContext);
 
+
+  const handleDarkMode = async () => {
+    toggle();
+    try {
+      await putData(`users/${currentUser._id}`, { "darkMode": !darkMode, "userId": currentUser._id }, "");
+      const user = JSON.parse(localStorage.getItem("user"));
+      localStorage.setItem("user", JSON.stringify({ ...user, darkMode: !darkMode }));
+
+    } catch (error) {
+      toast.error(error.response?.data)
+    }
+  }
   return (
     <div className="navbar">
       <div className="left">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span>lamasocial</span>
+          <span>Abdo-social</span>
         </Link>
         <HomeOutlinedIcon />
         {darkMode ? (
-          <WbSunnyOutlinedIcon onClick={toggle} />
+          <WbSunnyOutlinedIcon onClick={handleDarkMode} />
         ) : (
-          <DarkModeOutlinedIcon onClick={toggle} />
+          <DarkModeOutlinedIcon onClick={handleDarkMode} />
         )}
         <GridViewOutlinedIcon />
         <div className="search">
@@ -40,10 +54,10 @@ const Navbar = () => {
         <NotificationsOutlinedIcon />
         <div className="user">
           <img
-            src={currentUser.profilePic}
+            src={currentUser.profilePicture}
             alt=""
           />
-          <span>{currentUser.name}</span>
+          <span onClick={logOut}>{currentUser.username}</span>
         </div>
       </div>
     </div>

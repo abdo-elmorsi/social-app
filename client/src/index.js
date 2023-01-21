@@ -4,13 +4,28 @@ import App from "./App";
 import { AuthContextProvider } from "./context/authContext";
 import { DarkModeContextProvider } from "./context/darkModeContext";
 
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import 'react-photo-view/dist/react-photo-view.css';
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <DarkModeContextProvider>
-      <AuthContextProvider>
+    <AuthContextProvider>
+      <DarkModeContextProvider>
+        <ToastContainer
+          position="top-center"
+          autoClose={4000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <App />
-      </AuthContextProvider>
-    </DarkModeContextProvider>
+      </DarkModeContextProvider>
+    </AuthContextProvider>
   </React.StrictMode>
 );

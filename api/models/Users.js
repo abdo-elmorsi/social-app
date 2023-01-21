@@ -41,6 +41,10 @@ const userSchema = mongoose.Schema(
 			type: Boolean,
 			default: false
 		},
+		darkMode: {
+			type: Boolean,
+			default: false
+		},
 		desc: {
 			type: String,
 			max: 50,

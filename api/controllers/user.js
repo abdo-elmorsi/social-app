@@ -75,7 +75,7 @@ const followUser = async (req, res) => {
 				res.status(403).json("you already following this user.");
 			}
 		} catch (error) {
-			return res.status(500).json(error.message);
+			return res.status(500).json({ message: error.message });
 		}
 	} else {
 		res.status(403).json("you can't follow yourself.");
@@ -96,7 +96,7 @@ const unFollowUser = async (req, res) => {
 				res.status(403).json("you already don't follow this user.");
 			}
 		} catch (error) {
-			return res.status(500).json(error.message);
+			return res.status(500).json({ message: error.message });
 		}
 	} else {
 		res.status(403).json("you can't unFollow yourself");

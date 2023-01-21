@@ -15,7 +15,7 @@ const register = async (req, res) => {
 		});
 		// save user and respond
 		const user = await newUser.save();
-		res.status(200).json(user);
+		res.status(200).send(user);
 	} catch (error) {
 		return res.status(500).json(error.message);
 	}
@@ -31,30 +31,26 @@ const login = async (req, res) => {
 		!validPassword && res.status(400).json("Wrong password");
 
 		// valid
-		const token = jwt.sign({ id: user._id }, "secret-key");
+		const token = jwt.sign({ id: user._id }, "secretkey");
 		const {
 			password,
-			_id,
 			__v,
 			updatedAt,
 			createdAt,
 			...others
 		} = user._doc;
-		res.cookie("accessToken", token, { httpOnly: true }).status(200).json({ ...others, accessToken: token });
+
+		res.cookie("accessToken", token, { httpOnly: true }).status(200).json(others);
 	} catch (error) {
 		return res.status(500).json(error.message);
 	}
 };
-const logOut = async (req, res) => {
-	try {
-		res.clearCookie("accessToken", {
-			secure: true,
-			sameSite: "none"
-		}).status(200).json("User has been logged out.");
-	} catch (error) {
-		return res.status(500).json(error.message);
-	}
-}
+const logOut = (req, res) => {
+	res.clearCookie("accessToken", {
+		secure: true,
+		sameSite: "none"
+	}).status(200).json("User has been logged out.")
+};
 
 module.exports = {
 	register,

@@ -1,7 +1,13 @@
+import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
+import { makeRequest } from "../../helpers/axios";
 import Post from "../post/Post";
 import "./posts.scss";
 
 const Posts = () => {
+  const { currentUser } = useContext(AuthContext);
+
   //TEMPORARY
   const posts = [
     {
@@ -23,9 +29,24 @@ const Posts = () => {
     },
   ];
 
+
+  const { isLoading, error, data } = useQuery({
+    queryKey: ['repoData'], queryFn: () =>
+      makeRequest.post(`posts/timeline/all`, {
+        userId: currentUser._id
+      }).then(res => {
+        return res.data
+      })
+  })
+
+  if (isLoading) return 'Loading...'
+
+  if (error) return 'An error has occurred: ' + error.message
+
+
   return <div className="posts">
-    {posts.map(post=>(
-      <Post post={post} key={post.id}/>
+    {data.map(post => (
+      <Post post={post} key={post.id} />
     ))}
   </div>;
 };

@@ -53,7 +53,7 @@ const Profile = () => {
               </div>
               <div className="item">
                 <LanguageIcon />
-                <span>lama.dev</span>
+                <span>abdo.dev</span>
               </div>
             </div>
             <button>follow</button>
@@ -63,7 +63,7 @@ const Profile = () => {
             <MoreVertIcon />
           </div>
         </div>
-      <Posts/>
+        <Posts />
       </div>
     </div>
   );

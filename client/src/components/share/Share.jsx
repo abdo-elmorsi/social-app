@@ -7,21 +7,21 @@ import { AuthContext } from "../../context/authContext";
 
 const Share = () => {
 
-  const {currentUser} = useContext(AuthContext)
+  const { currentUser } = useContext(AuthContext)
   return (
     <div className="share">
       <div className="container">
         <div className="top">
           <img
-            src={currentUser.profilePic}
+            src={currentUser.profilePicture}
             alt=""
           />
-          <input type="text" placeholder={`What's on your mind ${currentUser.name}?`} />
+          <input type="text" placeholder={`What's on your mind ${currentUser.username}?`} />
         </div>
         <hr />
         <div className="bottom">
           <div className="left">
-            <input type="file" id="file" style={{display:"none"}} />
+            <input type="file" id="file" style={{ display: "none" }} />
             <label htmlFor="file">
               <div className="item">
                 <img src={Image} alt="" />

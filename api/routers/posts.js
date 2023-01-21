@@ -25,7 +25,7 @@ router.put("/:id", async (req, res) => {
 			res.status(403).json("You can update only your post.");
 		}
 	} catch (error) {
-		return res.status(500).json(error.message);
+		return res.status(500).json({ message: error.message });
 	}
 });
 // delete a post
@@ -39,7 +39,7 @@ router.delete("/:id", async (req, res) => {
 			res.status(403).json("You can delete only your post.");
 		}
 	} catch (error) {
-		return res.status(500).json(error.message);
+		return res.status(500).json({ message: error.message });
 	}
 })
 // like + disLike a post
@@ -63,11 +63,11 @@ router.get("/:id", async (req, res) => {
 		const post = await Post.findById(req.params.id);
 		res.status(200).json(post);
 	} catch (error) {
-		return res.status(500).json(error.message);
+		return res.status(500).json({ message: error.message });
 	}
 })
 // get timeline posts
-router.get("/timeline/all", async (req, res) => {
+router.post("/timeline/all", async (req, res) => {
 	try {
 		const currentUser = await User.findById(req.body.userId);
 		const userPosts = await Post.find({ userId: currentUser._id });
